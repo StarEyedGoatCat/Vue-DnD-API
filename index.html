@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DnD</title>
+        <!-- development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <link rel="stylesheet" href="dnd.css" />
+    </head>
+    <body>
+        <div id="apps">
+            <div class="button-c">
+                <button
+                    class="cybr-btn"
+                    v-if="showAll"
+                    v-on:click="limit = 12; showAll = false;"
+                >
+                    Show less
+                </button>
+                <button class="cybr-btn" v-else v-on:click="limit += 12;">
+                    Show 10 more
+                </button>
+                <button
+                    class="cybr-btn"
+                    v-on:click="limit = null; showAll = true"
+                >
+                    Show all
+                </button>
+            </div>
+            <div class="spells-container">
+                <template v-for="(spell,index) in dndSpellListLimit">
+                    <div class="spell-container">
+                        <a :href="preUrl + spell.url">
+                            <h3>{{ spell.name }}</h3>
+                            <h3>{{ dndDetails[index].desc[0] }}</h3>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <script src="app.js"></script>
+    </body>
+</html>

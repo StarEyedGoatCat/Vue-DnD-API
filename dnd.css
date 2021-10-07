@@ -1,0 +1,55 @@
+@font-face {
+    font-family: Cyber;
+    src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
+    font-display: swap;
+}
+
+.spell-container {
+    border: 3px gray solid;
+    border-radius: 5px;
+    flex: 15% 0 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spell-container a {
+    font-size: 18px;
+    color: black;
+    font-family: Cyber;
+    text-decoration: none;
+}
+
+.spells-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.button-c {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 1) 90%,
+        rgba(255, 255, 255, 0.7819502801120448) 98%,
+        rgba(255, 255, 255, 0.4009978991596639) 100%
+    );
+    position: sticky;
+    top: 0px;
+}
+
+.button-c button {
+    width: 15%;
+    padding: 20px 10px;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+    font-family: Cyber;
+}
