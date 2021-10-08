@@ -7,20 +7,26 @@
         <title>DnD</title>
         <!-- development version, includes helpful console warnings -->
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/js-skeleton/3.6.3/skeleton.min.js"></script> -->
         <link rel="stylesheet" href="dnd.css" />
     </head>
+
     <body>
         <div id="apps">
             <div class="button-c">
                 <button
                     class="cybr-btn"
                     v-if="showAll"
-                    v-on:click="limit = 12; showAll = false;"
+                    v-on:click="limit = basicLimit; showAll = false;"
                 >
                     Show less
                 </button>
-                <button class="cybr-btn" v-else v-on:click="limit += 12;">
-                    Show 10 more
+                <button
+                    class="cybr-btn"
+                    v-else
+                    v-on:click="limit += basicLimit;"
+                >
+                    Show more
                 </button>
                 <button
                     class="cybr-btn"
@@ -34,8 +40,53 @@
                     <div class="spell-container">
                         <a :href="preUrl + spell.url">
                             <h3>{{ spell.name }}</h3>
-                            <h3>{{ dndDetails[index].desc[0] }}</h3>
                         </a>
+                        <div v-if="ready" class="detail-container">
+                            <div class="line">
+                                <p>School:</p>
+                                <p>{{ spell.school.name }}</p>
+                            </div>
+                            <div class="line">
+                                <p>Components:</p>
+                                <p>{{ spell.components.join() }}</p>
+                            </div>
+                            <div class="line">
+                                <p>Level:</p>
+                                <p>{{ spell.level }}</p>
+                            </div>
+                            <div class="line dsc">
+                                <p>Description:</p>
+                                <p>{{ computedDSC(spell.desc,35) }} ...</p>
+                            </div>
+                            <img class="float ritual" v-if="spell.ritual" src="ritual.png">
+                                
+                            </img>
+                            <img class="float concentration" v-if="spell.concentration" src="concentration.png">
+                                
+                            </img>
+
+                        </div>
+                        <div v-else class="detail-container">
+                            <div class="line">
+                                <p>School:</p>
+                                <p class="skeleton sk-40"></p>
+                            </div>
+                            <div class="line">
+                                <p>Components:</p>
+                                <p class="skeleton sk-20"></p>
+                            </div>
+                            <div class="line">
+                                <p>Level:</p>
+                                <p class="skeleton sk-10"></p>
+                            </div>
+                            <div class="line dsc">
+                                <p>Description:</p>
+                                <p class="skeleton sk-100"></p>
+                                <p class="skeleton sk-100"></p>
+                                <p class="skeleton sk-100"></p>
+                                <p class="skeleton sk-40"></p>
+                            </div>
+                        </div>
                     </div>
                 </template>
             </div>

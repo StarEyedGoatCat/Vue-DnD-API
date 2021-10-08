@@ -2,11 +2,12 @@ var app = new Vue({
     el: "#apps",
     data: {
         dndSpellList: [],
-        dndDetails: [],
         fullDetailList: [],
         limit: 12,
         showAll: false,
         preUrl: "https://www.dnd5eapi.co",
+        ready: false,
+        basicLimit: 12,
     },
 
     async created() {
@@ -14,30 +15,34 @@ var app = new Vue({
         const response = await fetch("https://www.dnd5eapi.co/api/spells");
         const data = await response.json();
         // console.log(data.results);
-        this.dndSpellList = data.results;
+        this.dndSpellList = await data.results;
+        await this.fetchOtherData();
     },
 
     methods: {
         async fetchOtherData() {
             try {
-                detailedSpells = await this.dndSpellListLimit.map(
-                    async (spell) => {
-                        let url = "https://www.dnd5eapi.co" + spell.url;
-                        const response = await fetch(url);
-                        const data = await response.json();
-                        // await console.log(data);
-                        return await data;
-                    }
-                );
+                detailedSpells = await this.dndSpellList.map(async (spell) => {
+                    let url = "https://www.dnd5eapi.co" + spell.url;
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    // await console.log(data);
+                    return await data;
+                });
+
+                let dndDetails;
 
                 await Promise.all(detailedSpells).then((values) => {
-                    this.dndDetails = values;
+                    dndDetails = values;
                 });
-                await console.log(this.dndDetails);
-                // this.dndSpellListLimit = await this.mergeData(
-                //     this.dndSpellListLimit,
-                //     this.dndDetails
-                // );
+
+                this.dndSpellList = await this.mergeData(
+                    this.dndSpellList,
+                    dndDetails
+                );
+
+                console.log(this.dndSpellList);
+                this.ready = true;
             } catch (error) {
                 console.log(error);
             }
@@ -46,6 +51,9 @@ var app = new Vue({
             let arr3 = arr1.map((item, i) => Object.assign({}, item, arr2[i]));
 
             return arr3;
+        },
+        computedDSC: function (dsc, count) {
+            return dsc.join().split(" ").slice(0, count).join(" ");
         },
     },
 
@@ -57,7 +65,5 @@ var app = new Vue({
         },
     },
 
-    async updated() {
-        this.fetchOtherData();
-    },
+    async updated() {},
 });
